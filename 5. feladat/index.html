@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <input id="add-color">
+        <button id="add-color-btn">Szín hozzáadása</button>
+
+        <div id="select-container">
+            <select id="select">
+                <option value="circle">Kör</option>
+                <option value="rectangle">Téglalap</option>
+            </select>
+            <button id="select-btn">Kiválaszt</button>
+
+        </div>
+
+        <canvas id="myCanvas" width="800" height="1000" style="border:1px solid #000000; margin: 30px;">
+        </canvas>
+    </div>
+
+    <script>
+        const colors = ["red",]
+        document.getElementById("add-color-btn").addEventListener("click", function (e) {
+            const currentColor = document.getElementById("add-color").value;
+            if (currentColor !== "") colors.push(currentColor);
+        })
+
+        document.getElementById("select-btn").addEventListener("click", function (e) {
+            const selectContainer = document.getElementById("select-container");
+            const removeCircleInput = document.getElementById("input-circle");
+            const result = document.getElementById("result");
+            const result2 = document.getElementById("result2");
+            const removeRectangleInput1 = document.getElementById("input-rectangle1");
+            const removeRectangleInput2 = document.getElementById("input-rectangle2");
+
+            if (removeCircleInput) {
+                selectContainer.removeChild(removeCircleInput);
+                result && selectContainer.removeChild(result);
+            }
+
+            if (removeRectangleInput1 || removeRectangleInput2) {
+                selectContainer.removeChild(removeRectangleInput1);
+                selectContainer.removeChild(removeRectangleInput2);
+                result2 && selectContainer.removeChild(result2);
+
+            }
+
+            const value = document.getElementById("select").value;
+            const canvas = document.getElementById("myCanvas");
+            ctx = canvas.getContext("2d");
+            ctx.beginPath();
+
+
+
+            if (value === "circle") {
+                const newInput = document.createElement("input");
+                newInput.setAttribute("id", "input-circle");
+                newInput.setAttribute("type", "number");
+                selectContainer.appendChild(newInput);
+                newInput.addEventListener("change", function (e) {
+                    const oldResult = document.getElementById("result")
+                    oldResult && selectContainer.removeChild(oldResult);
+
+                    const r = this.value;
+                    const T = r ** 2 * Math.PI;
+                    const resultElement = document.createElement("p");
+                    resultElement.setAttribute("id", "result");
+                    resultElement.innerText = `A kör területe: ${T}`;
+                    selectContainer.appendChild(resultElement);
+
+                    //nem lehet felcserélni a canvas törlésénél a clearRect, beginPath, stroke sorrendjét
+                    ctx.clearRect(0, 0, 800, 1000);
+                    ctx.beginPath();
+                    ctx.stroke();
+
+                    ctx.arc(r * 2, r * 2, r, 0, 2 * Math.PI);
+                    ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)] || colors[0];
+                    ctx.fill();
+                    ctx.stroke();
+                })
+            }
+
+            if (value === "rectangle") {
+                const newInput1 = document.createElement("input");
+                const newInput2 = document.createElement("input");
+                newInput1.setAttribute("id", "input-rectangle1");
+                newInput1.setAttribute("type", "number");
+
+                newInput2.setAttribute("id", "input-rectangle2");
+                newInput2.setAttribute("type", "number");
+                selectContainer.appendChild(newInput1);
+                selectContainer.appendChild(newInput2);
+
+                let value1;
+                let value2;
+
+                newInput1.addEventListener('input', () => {
+                    const value1 = newInput1.value;
+                    const value2 = newInput2.value;
+               
+
+                    if (value && value2) {
+                        calculateT(value1, value2, selectContainer);
+                        //nem lehet felcserélni a canvas törlésénél a clearRect, beginPath, stroke sorrendjét
+                        ctx.clearRect(0, 0, 800, 1000);
+                        ctx.beginPath();
+                        ctx.stroke();
+
+                        ctx.rect(10, 10, value1, value2);
+                        ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)] || colors[0];
+                        ctx.fill();
+                        ctx.stroke();
+                    }
+                });
+
+                newInput2.addEventListener('input', () => {
+                    const value1 = newInput1.value;
+                    const value2 = newInput2.value;
+
+                    if (value && value2) {
+                        calculateT(value1, value2, selectContainer);
+                        //nem lehet felcserélni a canvas törlésénél a clearRect, beginPath, stroke sorrendjét
+                        ctx.clearRect(0, 0, 800, 1000);
+                        ctx.beginPath();
+                        ctx.stroke();
+
+                        ctx.rect(10, 10, value1, value2);
+                        ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)] || colors[0];
+                        ctx.fill();
+                        ctx.stroke();
+                    }
+                });
+            }
+        })
+
+
+        function calculateT(value1, value2, selectContainer) {
+            const T = value1 * value2;
+            const oldResult = document.getElementById("result2")
+            oldResult && selectContainer.removeChild(oldResult);
+              let  resultElement = document.createElement("p");
+                resultElement.setAttribute("id", "result2");
+                selectContainer.appendChild(resultElement);
+            
+            resultElement.innerText = `A téglalap területe: ${T}`;
+        }
+
+    </script>
+</body>
+
+</html>

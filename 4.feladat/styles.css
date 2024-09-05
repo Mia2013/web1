@@ -1,0 +1,103 @@
+h2 {
+    font-weight: 400;
+}
+
+header {
+    text-align: center;
+}
+
+.container{
+    border: 2px solid lightgray;
+    padding: 30px 15px;
+}
+
+
+.item-label1{
+    grid-area: label1;
+    margin: 6px 0px;
+}
+.item-input1{
+    grid-area: input1;
+
+}
+
+.item-label2{
+    grid-area: label2;
+    margin: 6px 0px;
+
+}
+.item-input2{
+    grid-area: input2;
+    width: 40%;
+}
+.item-label3{
+    grid-area: label3;
+    margin: 6px 0px;
+
+}
+.item-input3a{
+    grid-area: input3a;
+}
+.item-input3b{
+    grid-area: input3b;
+}
+.item-label4{
+    grid-area: label4;
+    margin: 6px 0px;
+
+}
+
+
+.item-input4a{
+    grid-area: input4a;
+}
+
+.item-input4b{
+    grid-area: input4b;
+}
+.item-label5{
+    grid-area: label5;
+    margin: 6px 0px;
+
+}
+
+.item-input5{
+    grid-area: input5;
+    width: 80%;
+}
+
+.item-label6{
+    grid-area: label6;
+    margin: 6px 0px;
+
+}
+
+.item-input6{
+    grid-area: input6;
+}
+
+.btn-group{
+    grid-area: btn-group;
+}
+
+label, input{
+    margin-bottom: 8px;
+}
+
+
+.form-container{
+    width: 800px;
+    display: grid ;
+    grid-template-columns: 250px 250px 250px;
+    grid-template-rows: auto;
+    grid-template-areas: 
+    "label1 input1 ."
+    "label2  input2 ."
+    "label3  input3a input3b"
+    "label4  input4a input4b"
+    "label5  label5 label5"
+    "input5 .  ."
+    "label6  input6 ."
+    "btn-group . ."
+    ;
+}
